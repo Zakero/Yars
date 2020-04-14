@@ -1,0 +1,105 @@
+/**
+ * \mainpage Welcome To The Y.A.R.S. Developer Resource
+ *
+ * \section Overview
+ * 
+ * \yars, Yet Another RPG System, is a _skill-based game system_ which means 
+ * Skill effectiveness will increase with use and the Character does not gain 
+ * levels.
+ *
+ * The following are the main modules of \yars:
+ * - <b>[Character](\ref group_Character)</b><br>
+ *   A Character is a collection of Items and Skills. A Character also Health 
+ *   as well a support for additional free-form data. _Anything that can 
+ *   interact with something else is a Character._
+ * - <b>[Skill](\ref group_Skill)</b><br>
+ *   A Skill is basically an action that the Character can do. A Skill has a 
+ *   Level to track how proficient a Character is with that Skill. Skills can 
+ *   also have [Attributes](\ref group_Attribute) associated with them. These 
+ *   Attribute affect the effectiveness of the Skill. When a Skill levels up, 
+ *   the associated Attributes will also increase. If two (or more) Skills 
+ *   share the same Attribute(s), those other Skills will being increased as 
+ *   well. The specifics of how Attributes contribute to Skills can be found 
+ *   [here](\ref zakero::Yars::calculateModifier()).
+ * - <b>[Item](\ref group_Item)</b><br>
+ *   Items serve many purposes:
+ *   - \header{Tool}
+ *     This is the most obvious, an Item is something that a Character uses to 
+ *     interact with another Character. To do so, the Character __must__ have a 
+ *     Skill that is compatible with the Item.
+ *   - \header{Modifier}
+ *     When an Item is equipped, it can provides bonuses or penalties to the 
+ *     Character. Any data in the Character, except for the free-form data, can 
+ *     be modified by an equipped item. For example, different types of armor 
+ *     can give bonuses to defense skills and boost the Character's Health.
+ *   - \header{Affect}
+ *     The creation of Affects is the primary purpose of Items. When an Affect 
+ *     is created, the Affect will combine the Item and Skill to determine the 
+ *     its values.
+ * - <b>[Affect](\ref group_Affect)</b><br>
+ *   The way interaction works between Characters is by using Affects. One 
+ *   Character will create an Affect and then that Affect is applied to a 
+ *   Character. "Interaction" includes everything from physical combat, casting 
+ *   magic, to "Skill Checks".
+ *
+ * There are other aspects to \yars than play more of a supporting role. These 
+ * modules and more can be read about by exploring the [Modules](modules.html) 
+ * section of the documentation.
+ *
+ * \section section_Leveling Leveling
+ *
+ * In \yars, Characters do not gain Levels like in most other RPGs. Instead, 
+ * Characters evolve as their Skills gain levels. As Characters become more 
+ * skilled previous challenges become easier and harder challenges can be 
+ * attempted.
+ *
+ * \subsection section_LevelingWhen When leveling happens
+ *
+ * Successfully, using a Skill will cause that Skill to automatically gain 
+ * experience. Once the Skill gains 1 more that its current level, the Skill 
+ * will "Level Up". So if a Skill is level 5, it will need 6 experience points 
+ * to become level 6.  This is flatter than most there RPG experience curves to 
+ * allow near linear level increases.  What is the highest level supported?  
+ * That is defined by zakero::Yars::Level_Max. Currently, it is 2,147,483,647.
+ * But seriously, keep your game's max level to something reasonable.
+ *
+ * \subsection section_LevelingCharacter Character Evolution
+ *
+ * The intention of Character Evolution is to have a Character make a choice 
+ * after a Skill gains a level. That choice is one of:
+ * - Increase max health
+ * - Increase the Attributes associated with the Skill
+ *
+ * By having this limitation, the Character (or Player) must decide if they 
+ * want to make the Character more durable or make the Skill more effective.
+ *
+ * Some may attempt to use "garbage skills" as a means of increasing the 
+ * character's health.  This is expected and should be treated as a feature.
+ *
+ * \todo{Events} Events are available to provide notification of when a 
+ * Character is ready to make this choice.
+ *
+ * It is important to note that <b>this choice is not hard-coded into \yars</b> 
+ * to allow for other ways for a Character to evolve.
+ *
+ * \section section_Flow Using Y.A.R.S.
+ *
+ * There is a general pattern to using \yars and it usually follows these 
+ * steps:
+ * -# Create an instance of [Yars](\ref zakero::Yars)
+ * -# Add Stuff
+ *    - Add all the needed [Skills](\ref zakero::Yars::skillAdd)
+ *    - Add all the needed [Items](\ref zakero::Yars::itemAdd)
+ * -# Create a [Character](\ref zakero::Yars::characterCreate)
+ *    - Give the Character [Skills](\ref zakero::Yars::characterSkillAdd)
+ *    - Give the Character [Items](\ref zakero::Yars::characterItemAdd)
+ *    - Repeat for each Character
+ * -# Character to Character Interaction
+ *    - Create Affects
+ *    - Apply Affects
+ *    - Revert Affects
+ * -# Character evolution by picking one of
+ *    - Increase a Character's health
+ *    - Improve a Character's attributes
+ * -# Repeat each step as needed
+ */
